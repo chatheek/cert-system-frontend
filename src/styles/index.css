@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+/* Theme Colors - CSS Custom Properties */
+:root {
+	--color-primary-purple: #8F54B7;
+	--color-primary-violet: #7339E6;
+	--color-bg-dark: #111;
+	--color-text-dark: #222;
+}
+
+/* Essential Custom Classes */
+.bg-gradient-primary {
+	background: linear-gradient(to bottom, var(--color-primary-purple), var(--color-primary-violet));
+}
