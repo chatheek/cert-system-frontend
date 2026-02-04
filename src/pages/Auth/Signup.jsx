@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import backgroundImage from '../../assets/images/background.png'
-import studentImage from '../../assets/images/hero-image.png'
-import instituteImage from '../../assets/images/how-it-works.png'
+import studentImage from '../../assets/images/studentSignup.png'
+import instituteImage from '../../assets/images/instituteSignup.png'
 
 export default function Signup() {
   const [userType, setUserType] = useState('student')
@@ -37,19 +37,24 @@ export default function Signup() {
   return (
     <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundRepeat: 'repeat' }} className="min-h-screen bg-gray-50">
       {/* Navbar placeholder */}
-      <nav className="bg-gradient-primary px-4 py-4">
-        <div className="max-w-6xl mx-auto flex justify-between items-center">
+      <nav className="bg-gradient-primary px-3 md:px-4 py-3">
+        <div className="max-w-312 mx-auto flex justify-between items-center gap-3">
           <h1 className="text-2xl font-bold text-white">CertiChain</h1>
-          <div className="flex gap-3">
-            <a href="/login" className="text-white hover:opacity-90 font-medium">Log In</a>
-            <button className="bg-white text-gray-800 rounded-lg px-4 py-2 font-semibold hover:shadow-md">
+          <div className="flex items-center gap-8">
+            <a
+              href="/login"
+              className="inline-flex items-center justify-center text-white border border-white/70 rounded-lg px-3 py-1.5 font-semibold hover:bg-white hover:text-gray-900 transition-colors"
+            >
+              Log In
+            </a>
+            <button className="inline-flex items-center justify-center bg-white text-gray-900 rounded-lg px-3 py-1.5 font-semibold border border-white/70 hover:bg-transparent hover:text-white transition-colors">
               Verify
             </button>
           </div>
         </div>
       </nav>
 
-      <div className="min-h-screen flex items-center justify-center py-8 px-4">
+      <div className="min-h-screen flex items-start justify-center pt-10 pb-8 px-4">
         <div className="w-full max-w-6xl">
           {/* Role Toggle */}
           <div className="flex justify-center mb-8">
@@ -79,10 +84,24 @@ export default function Signup() {
 
           {/* Student Signup Form */}
           {userType === 'student' && (
-            <div className="flex gap-8 lg:gap-12 items-center">
+            <div className="flex flex-col lg:flex-row-reverse items-stretch gap-0 bg-white rounded-3xl shadow-lg overflow-hidden">
+              {/* Right Side - Image */}
+              <div className="flex flex-1">
+                <div className="bg-purple-100 p-8 w-full flex items-center justify-center h-full">
+                  <div className="text-left ml-8">
+                    <h2 className="text-5xl font-bold text-black mb-2">
+                      certi<span className="text-purple-600">chain</span>
+                    </h2>
+                    <p className="text-2xl text-gray-700 font-semibold mb-6">New Here?</p>
+                    <p className="text-gray-600 text-sm mb-8">Join now and unlock your student dashboard.</p>
+                    <img src={studentImage} alt="Student" className="w-full h-auto" />
+                  </div>
+                </div>
+              </div>
+
               {/* Left Side - Form */}
               <div className="flex-1">
-                <form onSubmit={handleSubmit} className="bg-white rounded-3xl p-8 shadow-lg">
+                <form onSubmit={handleSubmit} className="p-8">
                   <div className="grid grid-cols-2 gap-4 mb-4">
                     <input
                       type="text"
@@ -153,29 +172,29 @@ export default function Signup() {
                   </div>
                 </form>
               </div>
-
-              {/* Right Side - Image */}
-              <div className="hidden lg:flex flex-1 justify-center">
-                <div className="bg-purple-100 rounded-3xl p-8 w-full max-w-sm flex items-center justify-center min-h-96">
-                  <div className="text-center">
-                    <h2 className="text-3xl font-bold text-black mb-2">
-                      certi<span className="text-purple-600">chain</span>
-                    </h2>
-                    <p className="text-gray-700 font-semibold mb-6">New Here?</p>
-                    <p className="text-gray-600 text-sm mb-8">Join now and unlock your student dashboard.</p>
-                    <img src={studentImage} alt="Student" className="w-full h-auto" />
-                  </div>
-                </div>
-              </div>
             </div>
           )}
 
           {/* Institute Signup Form */}
           {userType === 'institute' && (
-            <div className="flex gap-8 lg:gap-12 items-center">
+            <div className="flex flex-col lg:flex-row items-stretch gap-0 bg-white rounded-3xl shadow-lg overflow-hidden">
+              {/* Right Side - Image */}
+              <div className="flex flex-1">
+                <div className="bg-purple-100 p-8 w-full flex items-center justify-center h-full">
+                  <div className="text-left ml-8">
+                    <h2 className="text-5xl font-bold text-black mb-2">
+                      certi<span className="text-purple-600">chain</span>
+                    </h2>
+                    <p className="text-2xl text-gray-700 font-semibold mb-2">Register Your Institution</p>
+                    <p className="text-gray-600 text-sm mb-8">Issue, manage, and verify certificates securely.</p>
+                    <img src={instituteImage} alt="Institute" className="w-full h-auto" />
+                  </div>
+                </div>
+              </div>
+
               {/* Left Side - Form */}
               <div className="flex-1">
-                <form onSubmit={handleSubmit} className="bg-white rounded-3xl p-8 shadow-lg">
+                <form onSubmit={handleSubmit} className="p-8">
                   <input
                     type="text"
                     name="institutionName"
@@ -275,20 +294,6 @@ export default function Signup() {
                     </a>
                   </div>
                 </form>
-              </div>
-
-              {/* Right Side - Image */}
-              <div className="hidden lg:flex flex-1 justify-center">
-                <div className="bg-purple-100 rounded-3xl p-8 w-full max-w-sm flex items-center justify-center min-h-96">
-                  <div className="text-center">
-                    <h2 className="text-3xl font-bold text-black mb-2">
-                      certi<span className="text-purple-600">chain</span>
-                    </h2>
-                    <p className="text-gray-700 font-semibold mb-2">Register Your Institution</p>
-                    <p className="text-gray-600 text-sm mb-8">Issue, manage, and verify certificates securely.</p>
-                    <img src={instituteImage} alt="Institute" className="w-full h-auto" />
-                  </div>
-                </div>
               </div>
             </div>
           )}

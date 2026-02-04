@@ -17,7 +17,7 @@ const BulkUpload = () => {
       </div>
 
       {/* Main Content Card */}
-      <div className="bg-white rounded-[2rem] p-6 md:p-16 shadow-2xl border border-gray-50 min-h-[400px] flex flex-col items-center justify-center">
+      <div className="bg-white rounded-4xl p-6 md:p-16 shadow-2xl border border-gray-50 min-h-100 flex flex-col items-center justify-center">
         
         <div className="w-full max-w-3xl space-y-8">
           

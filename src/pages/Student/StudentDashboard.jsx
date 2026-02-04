@@ -248,7 +248,7 @@ export default function StudentDashboard() {
         {activeTab === 'roadmap' && (
           <div className="space-y-6">
             {/* AI Career Roadmap Section */}
-            <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl p-8 text-white">
+            <div className="bg-linear-to-r from-purple-500 to-pink-500 rounded-2xl p-8 text-white">
               <h3 className="text-2xl font-bold mb-3">Regenerate your personal career roadmap with AI</h3>
               <p className="text-white/90 mb-6">Generate an AI-based career roadmap customized to your performance. Enter prompt or make sure you have certificates uploaded.</p>
               <button className="bg-white text-(--color-primary-violet) rounded-lg px-8 py-3 text-sm font-bold hover:shadow-lg transition-shadow">
