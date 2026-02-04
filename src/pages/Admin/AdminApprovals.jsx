@@ -1,123 +1,79 @@
-import { useState, useCallback } from 'react';
-import './PendingApprovals.css';
+import React from 'react'
 
-const PendingApprovals = () => {
-  const [approvals, setApprovals] = useState([
-    {
-      id: 1,
-      universityName: 'Test University',
-      email: 'testuni@gmail.com',
-      walletAddress: '0xAbC12341f5678901234567890abcdef12345678',
-      logo: '📋',
-      verificationDoc: 'document.pdf',
-      registered: '1/16/2026',
-    },
-  ]);
-
-  const [loading, setLoading] = useState(false);
-
-  const handleApprove = useCallback((id) => {
-    setLoading(true);
-    // TODO: API call to approve
-    setTimeout(() => {
-      setApprovals((prev) => prev.filter((item) => item.id !== id));
-      setLoading(false);
-    }, 500);
-  }, []);
-
-  const handleReject = useCallback((id) => {
-    setLoading(true);
-    // TODO: API call to reject
-    setTimeout(() => {
-      setApprovals((prev) => prev.filter((item) => item.id !== id));
-      setLoading(false);
-    }, 500);
-  }, []);
-
-  const handleViewDoc = useCallback((docPath) => {
-    // TODO: Open document in modal or new tab
-    console.log('Viewing document:', docPath);
-  }, []);
-
+function TitleIcon() {
   return (
-    <div className="pending-approvals-container">
-      {/* Header */}
-      <div className="pending-header">
-        <div className="header-content">
-          <h1>⏳ Pending Approvals</h1>
-          <p>Review and approve or reject university registration requests</p>
-        </div>
-      </div>
+    <svg viewBox="0 0 24 24" className="w-6 h-6 text-amber-500" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 3h12" />
+      <path d="M6 21h12" />
+      <path d="M8 5c0 4 8 4 8 8s-8 4-8 8" />
+      <path d="M16 5c0 4-8 4-8 8s8 4 8 8" />
+    </svg>
+  )
+}
 
-      {/* Table Section */}
-      <div className="pending-table-section">
-        {approvals.length > 0 ? (
-          <div className="table-wrapper">
-            <table className="pending-table">
-              <thead>
-                <tr>
-                  <th>University Name</th>
-                  <th>Email</th>
-                  <th>Wallet Address</th>
-                  <th>Logo</th>
-                  <th>Verification Doc</th>
-                  <th>Registered</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {approvals.map((approval) => (
-                  <tr key={approval.id}>
-                    <td className="university-name">{approval.universityName}</td>
-                    <td className="email">{approval.email}</td>
-                    <td className="wallet-address">
-                      <span className="wallet-text">{approval.walletAddress}</span>
-                    </td>
-                    <td className="logo-cell">
-                      <div className="logo-preview">{approval.logo}</div>
-                    </td>
-                    <td className="doc-cell">
-                      <button
-                        className="view-doc-link"
-                        onClick={() => handleViewDoc(approval.verificationDoc)}
-                      >
-                        View Doc
-                      </button>
-                    </td>
-                    <td className="registered-date">{approval.registered}</td>
-                    <td className="actions-cell">
-                      <div className="actions-buttons">
-                        <button
-                          className="action-btn approve-btn"
-                          onClick={() => handleApprove(approval.id)}
-                          disabled={loading}
-                        >
-                          ✓ Approve
-                        </button>
-                        <button
-                          className="action-btn reject-btn"
-                          onClick={() => handleReject(approval.id)}
-                          disabled={loading}
-                        >
-                          ✕ Reject
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <div className="empty-state">
-            <p className="empty-icon">✓</p>
-            <h3>No Pending Approvals</h3>
-            <p>All university registrations have been processed!</p>
-          </div>
-        )}
+function ImagePlaceholder() {
+  return (
+    <div className="w-9 h-9 rounded-md border border-gray-400 flex items-center justify-center">
+      <svg viewBox="0 0 24 24" className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <circle cx="8" cy="8" r="1.5" />
+        <path d="M21 16l-5-5-4 4-2-2-5 5" />
+      </svg>
+    </div>
+  )
+}
+
+export default function Pending() {
+  return (
+    <div className="max-w-6xl mx-auto">
+      <div className="flex items-center gap-2">
+        <TitleIcon />
+        <h2 className="text-2xl font-bold text-gray-900">Pending Approvals</h2>
+      </div>
+      <p className="text-sm text-gray-500 mt-1">
+        Review and approve or reject university registration requests
+      </p>
+
+      <div className="mt-6 bg-white rounded-2xl shadow-[0_10px_22px_rgba(0,0,0,0.08)] px-6 py-5 overflow-x-auto transition-transform duration-200 hover:scale-[1.01]">
+        <table className="min-w-[900px] w-full text-left text-sm">
+          <thead className="text-gray-600">
+            <tr className="border-b border-gray-300">
+              <th className="py-3 font-semibold">University Name</th>
+              <th className="py-3 font-semibold">Email</th>
+              <th className="py-3 font-semibold">Wallet Address</th>
+              <th className="py-3 font-semibold">Logo</th>
+              <th className="py-3 font-semibold">Verification Doc</th>
+              <th className="py-3 font-semibold">Registered</th>
+              <th className="py-3 font-semibold">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="py-4">Test University</td>
+              <td>testuni@gmail.com</td>
+              <td>0xAbC1234Ef5678901234567890abcdef12345678</td>
+              <td><ImagePlaceholder /></td>
+              <td><a className="text-blue-600 underline" href="#">View Doc</a></td>
+              <td>1/16/2026</td>
+              <td className="space-y-2">
+                <button className="w-full bg-green-500 text-white px-4 py-2 rounded-lg font-semibold flex items-center justify-center gap-2">
+                  <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 6l-11 11-5-5" />
+                  </svg>
+                  Approve
+                </button>
+                <button className="w-full bg-red-600 text-white px-4 py-2 rounded-lg font-semibold flex items-center justify-center gap-2">
+                  <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M18 6L6 18" />
+                    <path d="M6 6l12 12" />
+                  </svg>
+                  Reject
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-  );
-};
-
-export default PendingApprovals;
+  )
+}

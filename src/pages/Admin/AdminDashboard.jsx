@@ -1,105 +1,77 @@
-import { useState, useCallback } from 'react';
-import Sidebar from '../components/Sidebar';
-import StatCard from '../components/StatCard';
-import PendingApprovals from './PendingApprovals';
-import ManageUniversities from './ManageUniversities';
-import './AdminDashboard.css';
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
-const AdminDashboard = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [activePage, setActivePage] = useState('dashboard');
+function StatCard({ title, value, accent }) {
+  return (
+    <div className="bg-white rounded-2xl px-6 py-5 shadow-[0_6px_16px_rgba(0,0,0,0.08)] text-center transition-transform duration-200 hover:scale-[1.02]">
+      <div className="text-sm text-gray-500 font-semibold">{title}</div>
+      <div className={`text-3xl font-extrabold mt-2 ${accent}`}>{value}</div>
+    </div>
+  )
+}
 
-  const handleToggleSidebar = useCallback(() => {
-    setSidebarOpen((prev) => !prev);
-  }, []);
-
-  const handleCloseSidebar = useCallback(() => {
-    setSidebarOpen(false);
-  }, []);
-
-  const handleNavigation = useCallback((page) => {
-    setActivePage(page);
-    setSidebarOpen(false);
-  }, []);
+export default function Dashboard() {
+  const navigate = useNavigate()
 
   return (
-    <div className="admin-dashboard-layout">
-      {/* Sidebar */}
-      <Sidebar 
-        isOpen={sidebarOpen} 
-        onClose={handleCloseSidebar}
-        activeNav={activePage}
-        onNavClick={handleNavigation}
-      />
-
-      {/* Main Content */}
-      <div className={`dashboard-wrapper ${sidebarOpen ? 'sidebar-open' : ''}`}>
-        {/* Toggle Button */}
-        <button
-          className="sidebar-toggle-btn"
-          onClick={handleToggleSidebar}
-          aria-label="Toggle sidebar"
-        >
-          ←
+    <div className="max-w-6xl mx-auto">
+      <section className="bg-white rounded-2xl shadow-[0_10px_22px_rgba(0,0,0,0.08)] px-8 py-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 transition-transform duration-200 hover:scale-[1.01]">
+        <div>
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Admin Dashboard</h2>
+          <p className="text-sm sm:text-base text-gray-500 mt-1">
+            Manage Universities, approve registrations, and monitor system statistics
+          </p>
+        </div>
+        <button className="self-start sm:self-auto bg-[#6d34d6] text-white font-semibold px-6 py-2.5 rounded-xl shadow-sm">
+          Log Out
         </button>
+      </section>
 
-        {/* Page Content */}
-        {activePage === 'dashboard' && (
-          <div className="dashboard-container">
-            {/* Header Section */}
-            <div className="dashboard-header">
-              <div className="header-content">
-                <h1>Admin Dashboard</h1>
-                <p>Manage Universities, approve registrations, and monitor system statistics</p>
-              </div>
-              <button
-                className="logout-button"
-                onClick={() => {
-                  console.log('Logout clicked');
-                }}
-              >
-                Log Out
-              </button>
-            </div>
+      <section className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+        <StatCard title="Total Students" value="8" accent="text-[#6d34d6]" />
+        <StatCard title="Total Universities" value="6" accent="text-[#6d34d6]" />
+        <StatCard title="Pending Approval" value="1" accent="text-amber-500" />
+        <StatCard title="Approved" value="5" accent="text-[#6d34d6]" />
+        <StatCard title="Total Certificates" value="41" accent="text-[#6d34d6]" />
+      </section>
 
-            {/* Stats Grid */}
-            <div className="stats-grid">
-              <StatCard label="Total Students" value="8" color="primary" />
-              <StatCard label="Total Universities" value="6" color="primary" />
-              <StatCard label="Pending Approval" value="1" color="warning" />
-              <StatCard label="Approved" value="5" color="purple" />
-              <StatCard label="Total Certificates" value="41" color="purple" />
-            </div>
-
-            {/* Quick Actions Section */}
-            <div className="quick-actions-section">
-              <h2>Quick Actions</h2>
-              <div className="actions-grid">
-                <button
-                  className="action-button action-primary"
-                  onClick={() => handleNavigation('pending')}
-                >
-                  <span className="action-icon">⏳</span>
-                  Review Pending Approvals
-                </button>
-                <button
-                  className="action-button action-secondary"
-                  onClick={() => handleNavigation('universities')}
-                >
-                  <span className="action-icon">🏛️</span>
-                  Manage Universities
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {activePage === 'pending' && <PendingApprovals />}
-
-        {activePage === 'universities' && <ManageUniversities />}
-      </div>
+      <section className="mt-10 bg-white rounded-2xl shadow-[0_10px_22px_rgba(0,0,0,0.08)] px-8 py-6 transition-transform duration-200 hover:scale-[1.01]">
+        <h3 className="text-lg sm:text-xl font-bold text-gray-900">Quick Actions</h3>
+        <div className="h-px bg-gray-300 mt-3 mb-6" />
+        <div className="flex flex-col sm:flex-row gap-4">
+          <button
+            onClick={() => navigate('/pending')}
+            className="w-full sm:w-auto bg-amber-500 text-white font-semibold px-6 py-3 rounded-xl shadow-sm flex items-center justify-center gap-2"
+          >
+            <span className="inline-flex">
+              <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 3h12" />
+                <path d="M6 21h12" />
+                <path d="M8 5c0 4 8 4 8 8s-8 4-8 8" />
+                <path d="M16 5c0 4-8 4-8 8s8 4 8 8" />
+              </svg>
+            </span>
+            Review Pending Approvals
+          </button>
+          <button
+            onClick={() => navigate('/universities')}
+            className="w-full sm:w-auto border border-gray-300 text-[#6d34d6] font-semibold px-6 py-3 rounded-xl flex items-center justify-center gap-2"
+          >
+            <span className="inline-flex">
+              <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 10h18" />
+                <path d="M5 10v8" />
+                <path d="M9 10v8" />
+                <path d="M15 10v8" />
+                <path d="M19 10v8" />
+                <path d="M2 20h20" />
+                <path d="M12 3l9 5H3l9-5z" />
+              </svg>
+            </span>
+            Manage Universities
+          </button>
+        </div>
+      </section>
     </div>
-  );
-};
-
-export default AdminDashboard;
+  )
+}

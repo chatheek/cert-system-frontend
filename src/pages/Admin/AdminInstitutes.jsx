@@ -1,125 +1,64 @@
-import { useState, useCallback } from 'react';
-import './ManageUniversities.css';
+import React from 'react'
 
-const ManageUniversities = () => {
-  const [universities, setUniversities] = useState([
-    {
-      id: 1,
-      universityName: 'Test University',
-      email: 'testuni@gmail.com',
-      walletAddress: '0xAbC12341f5678901234567890abcdef12345678',
-      onChainIssuer: 'Not Issuer',
-      status: 'Approved',
-      registered: '1/16/2026',
-    },
-  ]);
-
-  const [loading, setLoading] = useState(false);
-
-  const handleRevoke = useCallback((id) => {
-    setLoading(true);
-    // TODO: API call to revoke university status
-    setTimeout(() => {
-      setUniversities((prev) =>
-        prev.map((uni) =>
-          uni.id === id ? { ...uni, status: 'Revoked' } : uni
-        )
-      );
-      setLoading(false);
-    }, 500);
-  }, []);
-
-  const handleRestoreIssuer = useCallback((id) => {
-    setLoading(true);
-    // TODO: API call to restore issuer status
-    setTimeout(() => {
-      setUniversities((prev) =>
-        prev.map((uni) =>
-          uni.id === id ? { ...uni, onChainIssuer: 'Active Issuer' } : uni
-        )
-      );
-      setLoading(false);
-    }, 500);
-  }, []);
-
+function TitleIcon() {
   return (
-    <div className="manage-universities-container">
-      {/* Header */}
-      <div className="universities-header">
-        <div className="header-content">
-          <h1>🏛️ Manage Universities</h1>
-          <p>View all registered universities and manage their issuer status</p>
-        </div>
-      </div>
+    <svg viewBox="0 0 24 24" className="w-6 h-6 text-violet-500" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 10h18" />
+      <path d="M5 10v8" />
+      <path d="M9 10v8" />
+      <path d="M15 10v8" />
+      <path d="M19 10v8" />
+      <path d="M2 20h20" />
+      <path d="M12 3l9 5H3l9-5z" />
+    </svg>
+  )
+}
 
-      {/* Table Section */}
-      <div className="universities-table-section">
-        {universities.length > 0 ? (
-          <div className="table-wrapper">
-            <table className="universities-table">
-              <thead>
-                <tr>
-                  <th>University Name</th>
-                  <th>Email</th>
-                  <th>Wallet Address</th>
-                  <th>On-chain Issuer</th>
-                  <th>Status</th>
-                  <th>Registered</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {universities.map((university) => (
-                  <tr key={university.id}>
-                    <td className="university-name">{university.universityName}</td>
-                    <td className="email">{university.email}</td>
-                    <td className="wallet-address">
-                      <span className="wallet-text">{university.walletAddress}</span>
-                    </td>
-                    <td className="issuer-status">{university.onChainIssuer}</td>
-                    <td className="status-cell">
-                      <span className={`status-badge status-${university.status.toLowerCase()}`}>
-                        {university.status}
-                      </span>
-                    </td>
-                    <td className="registered-date">{university.registered}</td>
-                    <td className="actions-cell">
-                      <div className="actions-buttons">
-                        {university.status === 'Approved' && (
-                          <button
-                            className="action-btn revoke-btn"
-                            onClick={() => handleRevoke(university.id)}
-                            disabled={loading}
-                          >
-                            ⊘ Revoke
-                          </button>
-                        )}
-                        {university.status === 'Revoked' && (
-                          <button
-                            className="action-btn restore-btn"
-                            onClick={() => handleRestoreIssuer(university.id)}
-                            disabled={loading}
-                          >
-                            ↻ Restore
-                          </button>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <div className="empty-state">
-            <p className="empty-icon">🏛️</p>
-            <h3>No Universities Found</h3>
-            <p>No registered universities yet.</p>
-          </div>
-        )}
+export default function Universities() {
+  return (
+    <div className="max-w-6xl mx-auto">
+      <div className="flex items-center gap-2">
+        <TitleIcon />
+        <h2 className="text-2xl font-bold text-gray-900">Manage Universities</h2>
+      </div>
+      <p className="text-sm text-gray-500 mt-1">
+        View all registered universities and manage their issuer status
+      </p>
+
+      <div className="mt-6 bg-white rounded-2xl shadow-[0_10px_22px_rgba(0,0,0,0.08)] px-6 py-5 overflow-x-auto transition-transform duration-200 hover:scale-[1.01]">
+        <table className="min-w-[900px] w-full text-left text-sm">
+          <thead className="text-gray-600">
+            <tr className="border-b border-gray-300">
+              <th className="py-3 font-semibold">University Name</th>
+              <th className="py-3 font-semibold">Email</th>
+              <th className="py-3 font-semibold">Wallet Address</th>
+              <th className="py-3 font-semibold">On-chain Issuer</th>
+              <th className="py-3 font-semibold">Status</th>
+              <th className="py-3 font-semibold">Registered</th>
+              <th className="py-3 font-semibold">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="py-4">Test University</td>
+              <td>testuni@gmail.com</td>
+              <td>0xAbC1234Ef5678901234567890abcdef12345678</td>
+              <td>Not Issuer</td>
+              <td className="text-green-600 font-semibold">Approved</td>
+              <td>1/16/2026</td>
+              <td>
+                <button className="bg-red-600 text-white px-4 py-2 rounded-lg font-semibold flex items-center justify-center gap-2">
+                  <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M18 6L6 18" />
+                    <path d="M6 6l12 12" />
+                  </svg>
+                  Revoke
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-  );
-};
-
-export default ManageUniversities;
+  )
+}
